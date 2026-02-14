@@ -1,20 +1,29 @@
 package com.example.myapplication
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class AddNoteActivity : AppCompatActivity() {
+
+    private val viewModel = NotesViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_add_note)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val titleInput = findViewById<EditText>(R.id.titleInput)
+        val contentInput = findViewById<EditText>(R.id.contentInput)
+        val saveBtn = findViewById<Button>(R.id.saveBtn)
+
+        saveBtn.setOnClickListener {
+            viewModel.addNote(
+                titleInput.text.toString(),
+                contentInput.text.toString()
+            )
+
+            finish()
         }
     }
 }
