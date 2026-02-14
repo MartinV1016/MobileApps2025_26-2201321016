@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 class AddNoteActivity : AppCompatActivity() {
 
     private val viewModel = NotesViewModel()
+    private var noteId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,13 +18,28 @@ class AddNoteActivity : AppCompatActivity() {
         val contentInput = findViewById<EditText>(R.id.contentInput)
         val saveBtn = findViewById<Button>(R.id.saveBtn)
 
-        saveBtn.setOnClickListener {
-            viewModel.addNote(
-                titleInput.text.toString(),
-                contentInput.text.toString()
-            )
+        noteId = intent.getIntExtra("id", -1).takeIf { it != -1 }
 
+        if (noteId != null) {
+            titleInput.setText(intent.getStringExtra("title"))
+            contentInput.setText(intent.getStringExtra("content"))
+        }
+
+        saveBtn.setOnClickListener {
+            if (noteId != null) {
+                viewModel.updateNote(
+                    noteId!!,
+                    titleInput.text.toString(),
+                    contentInput.text.toString()
+                )
+            } else {
+                viewModel.addNote(
+                    titleInput.text.toString(),
+                    contentInput.text.toString()
+                )
+            }
             finish()
         }
     }
+
 }

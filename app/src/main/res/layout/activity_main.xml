@@ -5,9 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/addNoteBtn"
         android:text="Add Note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
